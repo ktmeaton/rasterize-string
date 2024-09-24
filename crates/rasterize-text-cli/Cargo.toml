@@ -1,0 +1,12 @@
+[package]
+name = "rasterize-text-cli"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+chrono         = { version = "0.4",    default-features = false, features = ["clock"] }
+clap           = { version = "4.5.17", default-features = true, features = [ "derive", "string"] }
+rasterize-text = { version = "0.1.0", default-features = false, path = "../rasterize-text" }
+color-eyre     = { workspace = true }
+env_logger     = { workspace = true }
+log            = { workspace = true }

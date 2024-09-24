@@ -1,0 +1,17 @@
+[package]
+name = "rasterize-text"
+version = "0.1.0"
+edition = "2021"
+
+[features]
+default = []
+docs    = ["dep:color-eyre"]
+
+[dependencies]
+color-eyre = { workspace = true, optional = true }
+image      = { version = "0.25.2", default-features = false, features = ['png'] }
+log        = { workspace = true }
+rusttype   = { version = "0.9.3",  default-features = false, features=['std'] }
+thiserror  = { version = "1",      default-features = false }
+unicode-normalization = { version = "0.1.24", default-features = false }
+
