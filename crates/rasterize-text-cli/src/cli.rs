@@ -1,6 +1,6 @@
+use crate::Verbosity;
 use clap::Parser;
 use rasterize_text::Color;
-use crate::Verbosity;
 
 /// The command-line interface (CLI).
 /// ---
@@ -17,7 +17,6 @@ use crate::Verbosity;
 #[clap(trailing_var_arg = true)]
 #[clap(arg_required_else_help = true)]
 pub struct Cli {
-
     /// Single-line of text to render.
     #[clap(help = "Single-line of text to render.")]
     #[clap(short = 't', long)]

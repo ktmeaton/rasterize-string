@@ -1,5 +1,5 @@
 use clap::ValueEnum;
-use color_eyre::eyre::{eyre, Result, Report};
+use color_eyre::eyre::{eyre, Report, Result};
 use log::LevelFilter;
 use std::fmt::{Debug, Display, Formatter};
 use std::str::FromStr;
@@ -11,7 +11,7 @@ pub enum Verbosity {
     #[default]
     Info,
     Trace,
-    Warn
+    Warn,
 }
 
 impl Display for Verbosity {
@@ -27,8 +27,8 @@ impl Verbosity {
     pub fn to_levelfilter(self) -> log::LevelFilter {
         match self {
             Verbosity::Error => LevelFilter::Error,
-            Verbosity::Warn  => LevelFilter::Warn,
-            Verbosity::Info  => LevelFilter::Info,
+            Verbosity::Warn => LevelFilter::Warn,
+            Verbosity::Info => LevelFilter::Info,
             Verbosity::Debug => LevelFilter::Debug,
             Verbosity::Trace => LevelFilter::Trace,
         }
@@ -36,7 +36,6 @@ impl Verbosity {
 }
 
 impl FromStr for Verbosity {
-
     type Err = Report;
 
     /// Returns a [`Verbosity`] converted from a [`str`].
@@ -46,11 +45,11 @@ impl FromStr for Verbosity {
     fn from_str(verbosity: &str) -> Result<Self, Self::Err> {
         let verbosity = match verbosity {
             "error" => Verbosity::Error,
-            "warn"  => Verbosity::Warn,
-            "info"  => Verbosity::Info,
+            "warn" => Verbosity::Warn,
+            "info" => Verbosity::Info,
             "debug" => Verbosity::Debug,
             "trace" => Verbosity::Trace,
-            _       => Err(eyre!("Unknown verbosity level: {verbosity}"))?
+            _ => Err(eyre!("Unknown verbosity level: {verbosity}"))?,
         };
 
         Ok(verbosity)

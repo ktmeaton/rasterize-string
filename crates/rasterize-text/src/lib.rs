@@ -3,10 +3,10 @@
 //! # Examples
 //!
 //! ## English
-//! 
-//! This example demonstrates how to rasterize English text to a pixel image. 
+//!
+//! This example demonstrates how to rasterize English text to a pixel image.
 //! It uses an English font that is vendored within the crate binary (DejaVu Sans).
-//! 
+//!
 //! ```rust
 //! use rasterize_text::{Color, read_font_bytes, EN_FONT, rasterize};
 //!
@@ -29,10 +29,10 @@
 //! ```
 //!
 //! ![image](../../../assets/fonts/dejavu/DejaVuSans.png)
-//! 
-//! This example demonstrates how to rasterize Korean text to a pixel image. 
+//!
+//! This example demonstrates how to rasterize Korean text to a pixel image.
 //! It uses a Korean font that is loaded from a local file path.
-//! 
+//!
 //! ```rust
 //! use rasterize_text::{Color, read_font_file, rasterize};
 //!
@@ -53,7 +53,7 @@
 //! image.save("rasterize_kr.png")?;
 //! # Ok::<(), color_eyre::eyre::Report>(())
 //! ```
-//! 
+//!
 //! ![image](../../../assets/fonts/noto/NotoSansKR.png)
 
 use image::{ImageBuffer, Rgba};
@@ -64,7 +64,6 @@ use std::fmt::Debug;
 use std::path::{Path, PathBuf};
 use std::str::FromStr;
 use unicode_normalization::UnicodeNormalization;
-
 
 // Embed fonts at compile time, so that their is a universal fallback
 // See license in assets/fonts/*/LICENSE
@@ -223,7 +222,6 @@ where
     T: AsRef<str> + Clone + UnicodeNormalization<I>,
     I: Iterator<Item = char>,
 {
-
     // Use uniform scaling of the text based on the size in pixels
     let scale = Scale::uniform(size);
     log::debug!("Font Size (pixels): {scale:?}");
@@ -251,7 +249,7 @@ where
     let mut min_x: i32 = 0;
     let mut max_x: i32 = 0;
     let mut min_y: i32 = 0;
-    let mut max_y: i32 = 0;    
+    let mut max_y: i32 = 0;
 
     // Iterate through the glyphs, updating our x coordinate extremes
     glyphs.iter().for_each(|glyph| {
@@ -267,7 +265,7 @@ where
             }
             if bounding_box.max.y > max_y {
                 max_y = bounding_box.max.y
-            }            
+            }
         }
     });
     log::debug!("Minimum x coordinate: {min_x:?}");
@@ -340,7 +338,12 @@ where
 }
 
 #[derive(Copy, Clone, Debug)]
-pub struct Color { pub r: u8, pub g: u8, pub b: u8, pub a: u8 }
+pub struct Color {
+    pub r: u8,
+    pub g: u8,
+    pub b: u8,
+    pub a: u8,
+}
 
 #[derive(Debug, thiserror::Error)]
 pub enum ColorError {
@@ -351,7 +354,14 @@ pub enum ColorError {
 }
 
 impl Default for Color {
-    fn default() -> Self { Color { r: 0, g: 0, b: 0, a: 255 }  }
+    fn default() -> Self {
+        Color {
+            r: 0,
+            g: 0,
+            b: 0,
+            a: 255,
+        }
+    }
 }
 
 impl std::fmt::Display for Color {
@@ -362,9 +372,7 @@ impl std::fmt::Display for Color {
     }
 }
 
-
 impl FromStr for Color {
-
     type Err = ColorError;
 
     /// Returns a [`Color`] converted from a [`str`].
@@ -378,16 +386,24 @@ impl FromStr for Color {
             .split(" ")
             // Try to convert the space-delimited text to rgba values (8-bit, 0-255)
             .map(|s| {
-                s.parse::<u8>().map_err(|e| ColorError::RgbaParseError(e, color.to_string(), s.to_string()))
+                s.parse::<u8>()
+                    .map_err(|e| ColorError::RgbaParseError(e, color.to_string(), s.to_string()))
             })
             // Gather the rgba values into a vector, throw an error if an issue was encountered
             .collect::<Result<Vec<u8>, ColorError>>()?;
 
         // Convert the rgba value vector into a fixed array of length 4
-        let rgba: [u8; 4] = rgba.clone()
-            .try_into().map_err(|_| ColorError::RgbaLengthError(rgba))?;
+        let rgba: [u8; 4] = rgba
+            .clone()
+            .try_into()
+            .map_err(|_| ColorError::RgbaLengthError(rgba))?;
 
-        let color = Color { r: rgba[0], g: rgba[1], b: rgba[2], a: rgba[3]};
+        let color = Color {
+            r: rgba[0],
+            g: rgba[1],
+            b: rgba[2],
+            a: rgba[3],
+        };
 
         Ok(color)
     }
