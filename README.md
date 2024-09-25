@@ -1,6 +1,6 @@
 # Rasterize Text
 
-Render a string to a pixel image with font picking.
+Rasterize a string of text to a pixel image.
 
 ## Why Rasterize Text?
 

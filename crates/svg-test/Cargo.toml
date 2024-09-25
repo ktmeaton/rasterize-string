@@ -1,0 +1,11 @@
+[package]
+name = "svg-test"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+base64 = { version = "0.22.1", default-features = true}
+rasterize-text = { version = "0.1.0", default-features = false, path = "../rasterize-text" }
+resvg = { version = "0.43.0", default-features = true, features = ["text"]}
+usvg = { version = "0.43.0", default-features = true, features = ["text"] }
+svg = { version = "0.17.0", default-features = false}

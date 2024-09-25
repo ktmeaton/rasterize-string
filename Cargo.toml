@@ -2,7 +2,7 @@
 members = [
     "crates/rasterize-text", 
     "crates/rasterize-text-cli"
-]
+, "crates/svg-test"]
 resolver = "2"
 
 [workspace.dependencies]
